@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ปลดล็อกลิงก์</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 10px;
+      color: white;
+      background-color: red;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .button.done {
+      background-color: green;
+      pointer-events: none;
+    }
+    #unlock-button {
+      background-color: gray;
+      cursor: not-allowed;
+    }
+    .status {
+      color: green;
+      font-size: 14px;
+      display: none;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>ทำตามขั้นตอนเพื่อปลดล็อกลิงก์ถัดไป:</h1>
+
+  <!-- Subscribe Button -->
+  <a href="https://www.youtube.com/@banana16700" target="_blank" rel="noopener noreferrer" class="button" id="subscribe-button">ติดตาม</a>
+  <div id="subscribe-status" class="status">✔ คุณติดตามแล้ว</div>
+
+  <!-- Like & Comment Button -->
+  <a href="https://www.youtube.com/watch?v=aj0yOWT-YIY" target="_blank" rel="noopener noreferrer" class="button" id="like-comment-button">ไลก์ & คอมเมนต์</a>
+  <div id="like-status" class="status">✔ คุณไลก์และคอมเมนต์แล้ว</div>
+
+  <!-- Unlock Button -->
+  <button id="unlock-button" disabled>ปลดล็อกลิงก์</button>
+
+  <!-- Link to unlock -->
+  <div id="unlocked-link" style="display: none; margin-top: 20px;">
+    <a href="https://your-next-link.com" target="_blank" class="button">ไปที่ลิงก์ถัดไป</a>
+  </div>
+
+  <script>
+    let subscribed = false;
+    let liked = false;
+
+    // Subscribe button logic
+    document.getElementById("subscribe-button").addEventListener("click", () => {
+      subscribed = true;
+      document.getElementById("subscribe-status").style.display = "block";
+      document.getElementById("subscribe-button").classList.add("done");
+      checkUnlock();
+    });
+
+    // Like and Comment button logic
+    document.getElementById("like-comment-button").addEventListener("click", () => {
+      liked = true;
+      document.getElementById("like-status").style.display = "block";
+      document.getElementById("like-comment-button").classList.add("done");
+      checkUnlock();
+    });
+
+    // Check if both steps are complete
+    function checkUnlock() {
+      if (subscribed && liked) {
+        document.getElementById("unlock-button").disabled = false;
+        document.getElementById("unlock-button").style.backgroundColor = "green";
+        document.getElementById("unlock-button").style.cursor = "pointer";
+      }
+    }
+
+    // Unlock button logic
+    document.getElementById("unlock-button").addEventListener("click", () => {
+      if (subscribed && liked) {
+        document.getElementById("unlocked-link").style.display = "block";
+        alert("ปลดล็อกลิงก์เรียบร้อย!");
+      } else {
